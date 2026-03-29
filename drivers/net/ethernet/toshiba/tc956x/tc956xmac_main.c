@@ -229,6 +229,7 @@
 #include "tc956xmac.h"
 #include <linux/reset.h>
 #include <linux/of_mdio.h>
+#include <linux/of_net.h>
 #include <linux/version.h>
 #include <linux/ctype.h>
 #include "dwxgmac2.h"
@@ -15780,10 +15781,13 @@ int tc956xmac_vf_dvr_probe(struct device *device,
 	/* To be enabled for config.ini parsing */
 	parse_config_file(priv->port_num, priv->plat->vf_id);
 #else
-	/* To be enabled for config.ini parsing */
-	parse_config_file(priv->port_num, 0);
+	ret = of_get_mac_address(priv->device->of_node, dev_addr[priv->probe_seq_no]);
+	if (ret == -EPROBE_DEFER)
+		return dev_err_probe(priv->device, ret,
+				     "Deferring probe for MAC address from DTB/NVMEM\n");
+	if (ret)
+		parse_config_file(priv->port_num, 0);
 #endif
-
 #endif /* EEPROM_MAC_ADDR */
 #ifndef TC956X_SRIOV_VF
 	res->mac = &dev_addr[priv->probe_seq_no][0];
