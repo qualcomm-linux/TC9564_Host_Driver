@@ -5,9 +5,13 @@ Release Version: V_06-00-03
 
 TC956X PCIe EMAC driver is based on "Fedora 30, kernel-5.4.19", "Fedora 36, kernel-6.1.18" and "Fedora 39, kernel-6.6.1"
 
+# About This Fork
+
+This is a fork of the upstream [TC9564_Host_Driver](https://github.com/TC956X/TC9564_Host_Driver) repository maintained by Toshiba Electronic Devices & Storage Corporation. The fork was created because the upstream repository does not accept external contributions and additional changes are required to properly support Qualcomm targets on the latest kernel releases.
+
 # Contribution Policy
-This repository is maintained internally within Toshiba Electronic Devices & Storage Corporation and does not accept external Pull Requests.
-Please do not open Pull Requests for this repository.
+
+Unlike the upstream repository, this fork is open to contributions. Development takes place on the `qcom` branch — please base any Pull Requests on that branch. Contributions that improve Qualcomm target support or general driver quality are welcome.
 
 # Compilation & Run: Need to be root user to execute the following steps.
 1.  Execute following commands:
