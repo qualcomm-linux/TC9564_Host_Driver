@@ -3424,6 +3424,11 @@ static int tc956xmac_pci_probe(struct pci_dev *pdev,
 	if (ret)
 		goto err_out_enb_failed;
 
+	if (tc956x_platform_phy_polling(&pdev->dev)) {
+		plat->phy_interrupt_mode = false;
+		NMSGPR_INFO(&pdev->dev, "qcom,phy-polling set, using PHY polling mode\n");
+	}
+
 	NMSGPR_INFO(&pdev->dev, "Re-Configured Module parameters of TC956x of Port-%d bus number-%x\n", plat->port_num, pdev->bus->number);
 	NMSGPR_INFO(&pdev->dev, "macX_interface = %d\n", res.port_interface);
 	NMSGPR_INFO(&pdev->dev, "macX_link_down_macrst = %d\n", plat->link_down_macrst);
@@ -4440,7 +4445,7 @@ static int tc956x_pcie_resume(struct device *dev)
 	priv->tc956x_port_pm_suspend = false;
 
 	/* Queue Work after resume complete to prevent MSI Disable */
-	if (priv->tc956xmac_pm_wol_interrupt) {
+	if (priv->tc956xmac_pm_wol_interrupt && priv->plat->phy_interrupt_mode) {
 		DBGPR_FUNC(&(pdev->dev), "%s : Clearing WOL and queuing phy work", __func__);
 		/* Clear WOL Interrupt after resume, if WOL enabled */
 		priv->tc956xmac_pm_wol_interrupt = false;

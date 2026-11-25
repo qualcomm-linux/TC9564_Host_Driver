@@ -125,7 +125,7 @@ static void tc956x_interrupt_en(struct tc956xmac_priv *priv, struct net_device *
 				mask_val |= (1 << (MSI_INT_RX_CH0 + chan));
 		}
 #ifdef TC956X_SRIOV_PF
-		if (priv->dev->phydev != NULL) {
+		if (priv->dev->phydev != NULL && priv->plat->phy_interrupt_mode) {
 			/* PHY MSI interrupt enabled */
 			mask_val &= ~(1 << MSI_INT_EXT_PHY);
 		} else

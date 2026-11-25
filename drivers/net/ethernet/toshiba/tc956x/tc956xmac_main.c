@@ -9914,7 +9914,7 @@ static irqreturn_t tc956xmac_interrupt_v0(int irq, void *dev_id)
 
 	val = readl(priv->ioaddr + TC956X_MSI_INT_STS_OFFSET(priv->fn_id_info.pf_no, priv->fn_id_info.vf_no));
 
-	if (val & TC956X_EXT_PHY_ETH_INT) {
+	if ((val & TC956X_EXT_PHY_ETH_INT) && priv->plat->phy_interrupt_mode) {
 		NMSGPR_INFO(priv->device, "PHY Interrupt %s\n", __func__);
 #ifndef TC956X_SRIOV_VF
 		if (priv->port_link_down == true)
@@ -10232,7 +10232,7 @@ static irqreturn_t tc956xmac_interrupt_v1(int irq, void *dev_id)
 
 	val = readl(priv->ioaddr + TC956X_MSI_INT_STS_OFFSET(priv->fn_id_info.pf_no, priv->fn_id_info.vf_no));
 
-	if (val & TC956X_EXT_PHY_ETH_INT) {
+	if ((val & TC956X_EXT_PHY_ETH_INT) && priv->plat->phy_interrupt_mode) {
 		NMSGPR_INFO(priv->device, "PHY Interrupt %s\n", __func__);
 #ifndef TC956X_SRIOV_VF
 		if (priv->port_link_down == true)

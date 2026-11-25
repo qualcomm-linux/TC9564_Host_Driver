@@ -117,6 +117,16 @@ int tc956x_platform_port_interface_overlay(struct device *dev,
 	return 1;
 }
 
+/*
+ * qcom,phy-polling selects PHY polling mode for boards where the PHY
+ * interrupt line is not wired to the QPS615 external PHY interrupt input.
+ */
+bool tc956x_platform_phy_polling(struct device *dev)
+{
+	return dev->of_node &&
+	       of_property_read_bool(dev->of_node, "qcom,phy-polling");
+}
+
 static int tc956x_platform_of_parse(struct device *dev,
 				    struct tc956x_qcom_priv *qpriv)
 {
