@@ -109,7 +109,25 @@ int tc956x_platform_port_interface_overlay(struct device *dev,
 		res->port_interface = ENABLE_SGMII_INTERFACE;
 		res->c45_state = false;
 		res->mdc_clk = TC956XMAC_XGMAC_MDC_CSR_62;
+		res->link_down_macrst = 0;
 		break;
+	case PHY_INTERFACE_MODE_RGMII:
+		res->port_interface = ENABLE_RGMII_INTERFACE;
+		res->c45_state = false;
+		res->mdc_clk = TC956XMAC_XGMAC_MDC_CSR_62;
+		res->link_down_macrst = 0;
+		break;
+	case PHY_INTERFACE_MODE_RGMII_ID:
+		res->port_interface = ENABLE_RGMII_ID_INTERFACE;
+		res->c45_state = false;
+		res->mdc_clk = TC956XMAC_XGMAC_MDC_CSR_62;
+		res->link_down_macrst = 0;
+		break;
+	case PHY_INTERFACE_MODE_10GBASER:
+		res->port_interface = ENABLE_XFI_INTERFACE;
+		res->c45_state = true;
+		res->mdc_clk = TC956XMAC_XGMAC_MDC_CSR_12;
+		res->link_down_macrst = 1;
 	default:
 		return -EINVAL;
 	}
